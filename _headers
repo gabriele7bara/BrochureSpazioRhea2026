@@ -1,0 +1,17 @@
+/
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/index.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/go.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/brochure_20260124.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/respiro_sacro_20260124.mp4
+  Cache-Control: public, max-age=31536000, immutable
