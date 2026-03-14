@@ -161,12 +161,7 @@ html, body{
 .hotspot1-anim{position:absolute;z-index:10 !important; pointer-events:none !important; background:var(--p1bg) !important; overflow:hidden; isolation:isolate;}
 .hotspot1-anim::before{pointer-events:none !important;}
 .video-matte{
-  position:absolute; inset:0;
-  background:var(--p1bg);
-  opacity:1;
-  transition:opacity 220ms ease;
-  z-index:2;
-  pointer-events:none;
+  display:none;
 }
 #respiroVideo{position:relative; z-index:1; background:transparent !important; display:block !important; width:100% !important; height:100% !important; object-fit:contain; mix-blend-mode:multiply;}
 /* Hotspots always on top and clickable */
