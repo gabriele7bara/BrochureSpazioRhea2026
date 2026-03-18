@@ -411,7 +411,13 @@ html, body{
   var START_OFFSET = 0.08; // seconds: removes the few initial off-color frames
   function setupVideo(){
     var v = document.getElementById('respiroVideo');
-    if(!v) return;
+if(!v) return;
+
+try {
+  v.pause();
+  v.currentTime = 0;
+  v.load();
+} catch(e){}
     var matte = document.querySelector('.hotspot1-anim .video-matte');
 
     function hideMatte(){
@@ -432,12 +438,19 @@ html, body{
     }, {once:true});
 
     function play(){
-      try{
-        var p = v.play();
-        if(p && p.catch) p.catch(function(){});
-      }catch(e){}
-    }
-    play();
+  try{
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){});
+  }catch(e){}
+}
+play();
+
+setTimeout(function(){
+  try{
+    v.currentTime = 0.01;
+    v.play();
+  } catch(e){}
+}, 100);
     var once = function(){ play(); window.removeEventListener('touchstart', once); window.removeEventListener('click', once); };
     window.addEventListener('touchstart', once, {passive:true});
     window.addEventListener('click', once, {passive:true});
