@@ -326,39 +326,49 @@ html, body{
 
 <script>
 (function(){
-  function getWrapTopAndHeight(){
-    var wrap = document.querySelector('.wrap');
-    if(!wrap) return null;
-    var r = wrap.getBoundingClientRect();
-    return { top: window.scrollY + r.top, height: r.height };
-  }
-  function scrollToPercent(p){
-    var wh = getWrapTopAndHeight();
-    if(!wh) return;
-    window.scrollTo({ top: wh.top + wh.height * p, behavior: 'smooth' });
-  }
-  // Bind only the 3 shortcut buttons (hs-link)
-  function bind(){
-    document.querySelectorAll('a.hs-link').forEach(function(a){
-      var t = (a.getAttribute('data-target') || '').toLowerCase();
-      var p = null;
-      if(t === 'p2') p = 0.25;
-      if(t === 'p3') p = 0.50;
-      if(t === 'p4') p = 0.75;
-      if(p === null) return;
 
-      function go(e){
-        e.preventDefault();
-        scrollToPercent(p);
-      }
-      a.addEventListener('touchend', go, {passive:false});
-      a.addEventListener('click', go, true);
-    });
+  var START_OFFSET = 0.08;
+
+  function setupVideo(){
+    var v = document.getElementById('respiroVideo');
+    if(!v) return;
+
+    v.addEventListener('loadedmetadata', function(){
+      try{
+        if(!isNaN(v.duration) && v.duration > START_OFFSET){
+          v.currentTime = START_OFFSET;
+        }
+      }catch(e){}
+    }, {once:true});
+
+    function play(){
+      try{
+        var p = v.play();
+        if(p && p.catch) p.catch(function(){});
+      }catch(e){}
+    }
+
+    play();
+
+    var once = function(){
+      play();
+      window.removeEventListener('touchstart', once);
+      window.removeEventListener('click', once);
+    };
+
+    window.addEventListener('touchstart', once, {passive:true});
+    window.addEventListener('click', once, {passive:true});
   }
-  window.addEventListener('load', bind);
-  window.addEventListener('pageshow', bind);
+
+  window.addEventListener('load', function(){
+    setupVideo();
+  });
+
+  window.addEventListener('pageshow', function(){
+    setupVideo();
+  });
+
 })();
-</script>
 <script>
 (function(){
   function playRespiro(){
