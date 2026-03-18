@@ -446,13 +446,13 @@ play();
   }
 
   window.addEventListener('load', function(){
-    bindShortcuts();
-    setupVideo();
-  });
-  window.addEventListener('pageshow', function(){
-    bindShortcuts();
-    setupVideo();
-  });
+  if (typeof bindShortcuts === 'function') bindShortcuts();
+  setupVideo();
+});
+window.addEventListener('pageshow', function(){
+  if (typeof bindShortcuts === 'function') bindShortcuts();
+  setupVideo();
+});
 })();
 </script>
 <script>
