@@ -413,11 +413,6 @@ html, body{
     var v = document.getElementById('respiroVideo');
 if(!v) return;
 
-try {
-  v.pause();
-  v.currentTime = 0;
-  v.load();
-} catch(e){}
     var matte = document.querySelector('.hotspot1-anim .video-matte');
 
     function hideMatte(){
@@ -445,12 +440,6 @@ try {
 }
 play();
 
-setTimeout(function(){
-  try{
-    v.currentTime = 0.01;
-    v.play();
-  } catch(e){}
-}, 100);
     var once = function(){ play(); window.removeEventListener('touchstart', once); window.removeEventListener('click', once); };
     window.addEventListener('touchstart', once, {passive:true});
     window.addEventListener('click', once, {passive:true});
