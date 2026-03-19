@@ -136,10 +136,11 @@ a.hs-btn{
   position:absolute;
   inset:0;
   background:transparent;
-  opacity:0;
-  transition:opacity 220ms ease;
+  opacity:0 !important;
+  transition:none;
   z-index:2;
   pointer-events:none;
+  display:none;
 }
 
 #respiroVideo,
@@ -152,6 +153,8 @@ a.hs-btn{
   object-fit:contain !important;
   object-position:center center !important;
   background:transparent !important;
+  mix-blend-mode:multiply;
+  clip-path:inset(1px 1px 1px 1px);
   border:0 !important;
   outline:none !important;
   box-shadow:none !important;
