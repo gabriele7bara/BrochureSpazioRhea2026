@@ -31,15 +31,6 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
 .bio-embed{width:100%;display:flex;justify-content:center;align-items:flex-start;}
 .bio-embed img{width:100%;height:auto;display:block;max-width:520px;}
 .bio-embed img{image-rendering:auto;}
-.respiro-video{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:contain;
-  background:#EDDBCC;
-  transform: translateZ(0);
-  will-change: transform, opacity;
-}
 /* Mobile QR/in-app browser fixes */
 html, body{width:100%;height:100%;margin:0;padding:0;overflow-x:hidden;}
 .wrap{width:100vw;max-width:none !important;}
@@ -93,23 +84,6 @@ html, body{
   height:auto !important;
   display:block;
 }
-/* Hotspot 1 (Respiro Sacro) positioning */
-.hotspot1-anim{
-  position:absolute;
-  z-index:20;
-  left:27.0835%;
-  top:5.5060%;
-  width:45.8330%;
-  height:10.7440%;
-  background:#EDDBCC;
-}
-.respiro-video{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:contain;
-  background:transparent;
-}
 
 /* --- Sliced raster layout (Cloudflare/mobile reliable anchors) --- */
 .flow{position:relative}
@@ -119,56 +93,6 @@ html, body{
 /* Ensure hotspot links stay tappable above images */
 .hotspot, .hs-link, a.hotspot, a.hs-link{pointer-events:auto !important; z-index:9999 !important; touch-action:manipulation}
 
-/* Keep the animation positioned (do not move) */
-.hotspot1-anim{position:absolute;z-index:5000;left:27.0835%;top:5.5060%;width:45.8330%;height:10.7440%;
-  pointer-events:none;background:transparent;overflow:hidden}
-.respiro-video{width:100%;height:100%;display:block;object-fit:contain;background:transparent;pointer-events:none}
-/* --- FIX: keep interactivity + blend white video bg into Page 1 --- */
-:root{ --p1bg:#ECDBCC; }
-
-/* Ensure the sliced page images never block taps */
-.page-img{ pointer-events:none !important; user-select:none; -webkit-user-drag:none; }
-
-/* Hotspots / links must always be above */
-.hotspot, a.hotspot, .hs-link, a.hs-link {
-  pointer-events:auto !important;
-  z-index: 99999 !important;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-/* Keep video from intercepting taps */
-.hotspot1-anim, #respiroVideo, .respiro-video {
-  pointer-events:none !important;
-}
-
-/* Blend: remove white matte by multiplying over the page background */
-.hotspot1-anim {
-  background: var(--p1bg) !important;
-  overflow:hidden;
-  border-radius: 0; /* avoid hairline edges */
-  isolation:isolate; /* contain blend */
-}
-#respiroVideo {
-  width:100% !important;
-  height:100% !important;
-  display:block !important;
-  object-fit:contain;
-  background: transparent !important;
-  mix-blend-mode: multiply; /* white -> bg */
-}
-/* --- FINAL FIX: matte for first frames + restore taps --- */
-.hotspot1-anim{position:absolute;z-index:10 !important; pointer-events:none !important; background:var(--p1bg) !important; overflow:hidden; isolation:isolate;}
-.hotspot1-anim::before{pointer-events:none !important;}
-.video-matte{
-  position:absolute; inset:0;
-  background:var(--p1bg);
-  opacity:1;
-  transition:opacity 220ms ease;
-  z-index:2;
-  pointer-events:none;
-}
-#respiroVideo{position:relative; z-index:1; background:transparent !important; display:block !important; width:100% !important; height:100% !important; object-fit:contain; mix-blend-mode:multiply;}
 /* Hotspots always on top and clickable */
 .hotspot, a.hotspot, .hs-link, a.hs-link{
   z-index:999999 !important;
