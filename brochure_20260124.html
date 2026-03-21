@@ -392,13 +392,14 @@ html, body{
     window.addEventListener('click', once, {passive:true});
   }
 
- window.addEventListener('load', function(){
-  bind('a.footer-cta');
+window.addEventListener('load', function(){
+  bindShortcuts();
+  setupVideo();
 });
 window.addEventListener('pageshow', function(){
-  bind('a.footer-cta');
+  bindShortcuts();
+  setupVideo();
 });
-})();
 </script>
 <script>
 (function(){
