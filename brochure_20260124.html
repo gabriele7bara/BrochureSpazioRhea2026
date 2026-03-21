@@ -1,20 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Spazio Rhea – Brochure Digitale (DEF2 – fix hotspot)</title>
 <style>
 :root { --overlay: rgba(0,0,0,.45); }
-html, body{margin:0;padding:0;background:#fff;background:#ECDBCC;}
+html, body{margin:0;padding:0;background:#fff;background:#EDDBCC;}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
 
 .wrap{width:min(530px, 100%);margin:0 auto;position:relative;}
 .layout-raster{width:100%;height:auto;display:block;}
 .anchor{position:absolute;left:0;width:1px;height:1px;}
 
-.hs{position:absolute;display:block;background:transparent;border:0;padding:0;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color: transparent;}
-.hs:focus{outline:none;}
+.hs{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color: transparent;}
+.hs:focus{outline:2px solid rgba(0,0,0,.25); outline-offset:2px;}
 
 .modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.98);
   width:min(560px, 92vw);max-height:80vh;overflow:auto;border-radius:22px;padding:26px 18px;
@@ -30,20 +31,40 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
 .bio-embed{width:100%;display:flex;justify-content:center;align-items:flex-start;}
 .bio-embed img{width:100%;height:auto;display:block;max-width:520px;}
 .bio-embed img{image-rendering:auto;}
-/* Mobile QR/in-app browser fixes */
-:root{color-scheme:light; --p1bg:#ECDBCC;}
-html, body{
+.respiro-video{
   width:100%;
   height:100%;
+  display:block;
+  object-fit:contain;
+  background:#EDDBCC;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+/* Mobile QR/in-app browser fixes */
+html, body{width:100%;height:100%;margin:0;padding:0;overflow-x:hidden;}
+.wrap{width:100vw;max-width:none !important;}
+.layout-raster{width:100vw !important;max-width:none !important;height:auto;display:block;}
+/* Ensure hotspots align with full-width scaling */
+.wrap{position:relative;}
+/* Video: prefer contain to avoid cropping, but eliminate side gutters by matching background */
+.respiro-video{background:transparent; object-fit:contain;}
+/* Some in-app browsers apply color adjustments; opt out where supported */
+:root{color-scheme:light;}
+/* Full-bleed look without white gutters */
+body{background:#EDDBCC;}
+.wrap{background:#EDDBCC;}
+/* Use padding for safe areas on notched phones */
+@supports(padding: max(0px)) {
+  .wrap{padding-left:max(0px, env(safe-area-inset-left)); padding-right:max(0px, env(safe-area-inset-right));}
+}
+/* Center the content; gutters inherit background instead of white */
+.layout-raster{background:#EDDBCC;}
+/* Full-width FIT (no crop): the brochure always matches the screen left/right edges */
+html, body{
   margin:0;
   padding:0;
+  width:100%;
   overflow-x:hidden;
-}
-body,
-.wrap,
-.layout-raster,
-#layoutRaster{
-  background:#ECDBCC;
 }
 .wrap{
   position:relative;
@@ -51,72 +72,28 @@ body,
   max-width:none !important;
   margin:0 !important;
   padding:0 !important;
-  pointer-events:auto !important;
 }
-.layout-raster,
-#layoutRaster{
+#layoutRaster, .layout-raster{
   width:100vw !important;
   max-width:none !important;
   height:auto !important;
   display:block;
 }
-@supports(padding: max(0px)) {
-  .wrap{
-    padding-left:max(0px, env(safe-area-inset-left));
-    padding-right:max(0px, env(safe-area-inset-right));
-  }
+/* === Full-width layout override (keep hotspots aligned) === */
+.wrap{
+  position:relative;
+  width:100vw !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
 }
-
-/* --- Sliced raster layout (Cloudflare/mobile reliable anchors) --- */
-.flow{position:relative}
-.page-img{
-  width:100%;
-  height:auto;
-  display:block;
-  pointer-events:none !important;
-  user-select:none;
-  -webkit-user-drag:none;
-}
-.anchor{height:1px;width:1px}
-
-/* Hotspots / CTA / bio links always above images */
-.hotspot,
-.hs-link,
-.hs-btn,
-a.hotspot,
-a.hs-link,
-a.hs-btn{
-  z-index:999999 !important;
-  pointer-events:auto !important;
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:rgba(0,0,0,0);
-}
-
-/* CSS-only modal fallback */
-.modal{opacity:0 !important; pointer-events:none !important;}
-.modal:target{opacity:1 !important; pointer-events:auto !important; transform:translate(-50%,-50%) scale(1) !important;}
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.42);
-  z-index:0;
+#layoutRaster, .layout-raster{
+  width:100vw !important;
+  max-width:none !important;
+  height:auto !important;
   display:block;
 }
-.modal-card{position:relative; z-index:1;}
-.modal-close{margin-top:14px;opacity:.85}
-.modal-close a{
-  text-decoration:none;
-  color:inherit;
-  border:1px solid rgba(0,0,0,.18);
-  padding:10px 14px;
-  border-radius:999px;
-  display:inline-block;
-  pointer-events:auto !important;
-}
-.modal-overlay{display:none;}
-
-/* Video (Respiro Sacro) */
-
+/* Hotspot 1 (Respiro Sacro) positioning */
 .hotspot1-anim{
   position:absolute;
   z-index:20;
@@ -124,50 +101,124 @@ a.hs-btn{
   top:5.5060%;
   width:45.8330%;
   height:10.7440%;
-  background:transparent;
-  border:0;
-  outline:none;
-  box-shadow:none;
-  overflow:hidden;
-  pointer-events:none;
+  background:#EDDBCC;
 }
-
-.video-matte{
-  position:absolute;
-  inset:0;
-  background:transparent;
-  opacity:0 !important;
-  transition:none;
-  z-index:2;
-  pointer-events:none;
-  display:none;
-}
-
-#respiroVideo,
 .respiro-video{
-  position:relative;
-  z-index:1;
-  width:100% !important;
-  height:100% !important;
-  display:block !important;
-  object-fit:contain !important;
-  object-position:center center !important;
-  background:transparent !important;
-  mix-blend-mode:multiply;
-  clip-path:inset(1px 1px 1px 1px);
-  border:0 !important;
-  outline:none !important;
-  box-shadow:none !important;
-  -webkit-appearance:none;
-  appearance:none;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  background:transparent;
+}
+
+/* --- Sliced raster layout (Cloudflare/mobile reliable anchors) --- */
+.flow{position:relative}
+.page-img{width:100%;height:auto;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.anchor{height:1px;width:1px}
+
+/* Ensure hotspot links stay tappable above images */
+.hotspot, .hs-link, a.hotspot, a.hs-link{pointer-events:auto !important; z-index:9999 !important; touch-action:manipulation}
+
+/* Keep the animation positioned (do not move) */
+.hotspot1-anim{position:absolute;z-index:5000;left:27.0835%;top:5.5060%;width:45.8330%;height:10.7440%;
+  pointer-events:none;background:transparent;overflow:hidden}
+.respiro-video{width:100%;height:100%;display:block;object-fit:contain;background:transparent;pointer-events:none}
+/* --- FIX: keep interactivity + blend white video bg into Page 1 --- */
+:root{ --p1bg:#ECDBCC; }
+
+/* Ensure the sliced page images never block taps */
+.page-img{ pointer-events:none !important; user-select:none; -webkit-user-drag:none; }
+
+/* Hotspots / links must always be above */
+.hotspot, a.hotspot, .hs-link, a.hs-link {
+  pointer-events:auto !important;
+  z-index: 99999 !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* Keep video from intercepting taps */
+.hotspot1-anim, #respiroVideo, .respiro-video {
   pointer-events:none !important;
 }
 
-/* Use stable viewport units on mobile scanners */
-@supports (height: 100svh){
-  .hotspot1{ min-height: 100svh !important; }
+/* Blend: remove white matte by multiplying over the page background */
+.hotspot1-anim {
+  background: var(--p1bg) !important;
+  overflow:hidden;
+  border-radius: 0; /* avoid hairline edges */
+  isolation:isolate; /* contain blend */
 }
+#respiroVideo {
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:contain;
+  background: transparent !important;
+  mix-blend-mode: multiply; /* white -> bg */
+}
+/* --- FINAL FIX: matte for first frames + restore taps --- */
+.hotspot1-anim{position:absolute;z-index:10 !important; pointer-events:none !important; background:var(--p1bg) !important; overflow:hidden; isolation:isolate;}
+.hotspot1-anim::before{pointer-events:none !important;}
+.video-matte{
+  position:absolute; inset:0;
+  background:var(--p1bg);
+  opacity:1;
+  transition:opacity 220ms ease;
+  z-index:2;
+  pointer-events:none;
+}
+#respiroVideo{position:relative; z-index:1; background:transparent !important; display:block !important; width:100% !important; height:100% !important; object-fit:contain; mix-blend-mode:multiply;}
+/* Hotspots always on top and clickable */
+.hotspot, a.hotspot, .hs-link, a.hs-link{
+  z-index:999999 !important;
+  pointer-events:auto !important;
+  touch-action:manipulation;
+}
+.wrap{pointer-events:auto !important;}
 
+/* --- CSS-only modals (works even if JS blocked in QR viewers) --- */
+.modal{opacity:0 !important; pointer-events:none !important;}
+.modal:target{opacity:1 !important; pointer-events:auto !important; transform:translate(-50%,-50%) scale(1) !important;}
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.42);
+  z-index:-1; display:block;
+}
+.modal-card{position:relative;}
+.modal-close{margin-top:14px;opacity:.85}
+.modal-close a{text-decoration:none;color:inherit;border:1px solid rgba(0,0,0,.18);padding:10px 14px;border-radius:999px;display:inline-block}
+
+
+
+/* Video (Respiro Sacro) */
+:root{ --p1bg:#ECDBCC; }
+.hotspot1-anim{
+  position:absolute;
+  z-index:20;
+  left:27.0835%;
+  top:5.5060%;
+  width:45.8330%;
+  height:10.7440%;
+  background:#EDDBCC;
+}
+.video-matte{
+  position:absolute; inset:0;
+  background:var(--p1bg);
+  opacity:1;
+  transition:opacity 220ms ease;
+  z-index:2;
+  pointer-events:none;
+}
+#respiroVideo{position:relative; z-index:1; background:transparent !important; display:block !important; width:100% !important; height:100% !important; object-fit:contain; mix-blend-mode:multiply;}
+.respiro-video{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  background:#EDDBCC;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
 </style>
 </head>
 <body>
@@ -175,18 +226,18 @@ a.hs-btn{
 <div class="wrap" id="wrap">
   <div class="flow">
     <img class="page-img" src="brochure_page1.webp" alt="Brochure pagina 1">
-    <div class="anchor"></div>
+    <div id="p2" class="anchor"></div>
     <img class="page-img" src="brochure_page2.webp" alt="Brochure pagina 2">
-    <div class="anchor"></div>
+    <div id="p3" class="anchor"></div>
     <img class="page-img" src="brochure_page3.webp" alt="Brochure pagina 3">
-    <div class="anchor"></div>
+    <div id="p4" class="anchor"></div>
     <img class="page-img" src="brochure_page4.webp" alt="Brochure pagina 4">
   </div>
   <div id="p1" class="anchor" style="top:0.000000%"></div>
   <div id="p2" class="anchor" style="top:24.928228%"></div>
   <div id="p3" class="anchor" style="top:49.856456%"></div>
   <div id="p4" class="anchor" style="top:74.799452%"></div>
-  <div class="hotspot1-anim"><div class="video-matte" aria-hidden="true"></div><video id="respiroVideo" class="respiro-video" autoplay muted loop playsinline webkit-playsinline preload="auto"><source src="respiro_sacro_20260124.mp4" type="video/mp4"></video></div>
+  <div class="hotspot1-anim"><div class="video-matte" aria-hidden="true"></div><video id="respiroVideo" class="respiro-video" autoplay muted playsinline preload="auto" poster="data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABwAQCdASoIAAgAAkA4JYwCdAFAAAD+9/R9JdLkNgy22CAA"><source src="respiro_sacro.mp4" type="video/mp4"></video></div>
 <a class="hs hs-link" style="left:23.9942%; top:22.4620%; width:51.4404%; height:1.1519%;;background:rgba(0,0,0,0.001);" href="#p2" aria-label="Vai a Pagina 2" data-target="p2"></a>
   <a class="hs hs-link" style="left:24.5060%; top:47.3016%; width:51.4404%; height:1.1519%;;background:rgba(0,0,0,0.001);" href="#p3" aria-label="Vai a Pagina 3" data-target="p3"></a>
   <a class="hs hs-link" style="left:24.5060%; top:72.2594%; width:51.4404%; height:1.1519%;;background:rgba(0,0,0,0.001);" href="#p4" aria-label="Vai a Pagina 4" data-target="p4"></a>
@@ -198,6 +249,7 @@ a.hs-btn{
   <a class="hs hs-btn" style="left:0.0655%; top:64.9782%; width:99.8097%; height:2.0675%;" aria-label="Apri dettagli VERONICA STERI" href="#op2"></a>
 </div>
 
+<div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="op1" style="background:#e8f1f4;">
 <a class="modal-backdrop" href="#" aria-label="Chiudi"></a>
 <div class="modal-card">
@@ -278,7 +330,62 @@ a.hs-btn{
 
 <script>
 (function(){
-  // --- CTA shortcuts and bio modal buttons ---
+  function getWrapTopAndHeight(){
+    var wrap = document.querySelector('.wrap');
+    if(!wrap) return null;
+    var r = wrap.getBoundingClientRect();
+    return { top: window.scrollY + r.top, height: r.height };
+  }
+  function scrollToPercent(p){
+    var wh = getWrapTopAndHeight();
+    if(!wh) return;
+    window.scrollTo({ top: wh.top + wh.height * p, behavior: 'smooth' });
+  }
+  // Bind only the 3 shortcut buttons (hs-link)
+  function bind(){
+    document.querySelectorAll('a.hs-link').forEach(function(a){
+      var t = (a.getAttribute('data-target') || '').toLowerCase();
+      var p = null;
+      if(t === 'p2') p = 0.25;
+      if(t === 'p3') p = 0.50;
+      if(t === 'p4') p = 0.75;
+      if(p === null) return;
+
+      function go(e){
+        e.preventDefault();
+        scrollToPercent(p);
+      }
+      a.addEventListener('touchend', go, {passive:false});
+      a.addEventListener('click', go, true);
+    });
+  }
+  window.addEventListener('load', bind);
+  window.addEventListener('pageshow', bind);
+})();
+</script>
+<script>
+(function(){
+  function playRespiro(){
+    var v = document.getElementById('respiroVideo');
+    if(!v) return;
+    try{
+      var p = v.play();
+      if(p && p.catch) p.catch(function(){});
+    }catch(e){}
+  }
+  function setup(){
+    playRespiro();
+    var once = function(){ playRespiro(); window.removeEventListener('touchstart', once); window.removeEventListener('click', once); };
+    window.addEventListener('touchstart', once, {passive:true});
+    window.addEventListener('click', once, {passive:true});
+  }
+  window.addEventListener('load', setup);
+  window.addEventListener('pageshow', setup);
+})();
+</script>
+<script>
+(function(){
+  // --- CTA shortcuts (hs-link only; BIO untouched) ---
   function getWrapTopAndHeight(){
     var wrap = document.querySelector('.wrap');
     if(!wrap) return null;
@@ -308,20 +415,11 @@ a.hs-btn{
   var START_OFFSET = 0.08; // seconds: removes the few initial off-color frames
   function setupVideo(){
     var v = document.getElementById('respiroVideo');
-    var matte = document.querySelector('.video-matte');
     if(!v) return;
-    if(v.dataset.setupDone === '1'){
-      if(matte && !v.paused && !v.ended && v.readyState >= 2) matte.style.opacity = '0';
-      return;
-    }
-    v.dataset.setupDone = '1';
+    var matte = document.querySelector('.hotspot1-anim .video-matte');
 
     function hideMatte(){
       if(matte) matte.style.opacity = '0';
-    }
-
-    function showMatte(){
-      if(matte) matte.style.opacity = '1';
     }
 
     v.addEventListener('loadedmetadata', function(){
@@ -332,16 +430,10 @@ a.hs-btn{
       }catch(e){}
     }, {once:true});
 
+    v.addEventListener('playing', hideMatte, {once:true});
     v.addEventListener('canplay', function(){
       // If autoplay blocked, matte stays; first tap will start and then matte fades
     }, {once:true});
-
-    v.addEventListener('loadeddata', hideMatte, {once:true});
-    v.addEventListener('playing', hideMatte);
-    v.addEventListener('timeupdate', hideMatte, {once:true});
-
-    showMatte();
-    if(!v.paused && !v.ended && v.readyState >= 2) hideMatte();
 
     function play(){
       try{
@@ -355,97 +447,45 @@ a.hs-btn{
     window.addEventListener('click', once, {passive:true});
   }
 
-  function bindBioButtons(){
-    document.querySelectorAll('a.hs-btn').forEach(function(a){
-      if(a.dataset.bioBound === '1') return;
-      a.dataset.bioBound = '1';
-      function openBio(e){
-        var href = (a.getAttribute('href') || '').trim();
-        if(!href || href.charAt(0) !== '#') return;
-        e.preventDefault();
-        window.location.hash = href;
-      }
-      a.addEventListener('click', openBio, true);
-      a.addEventListener('touchend', openBio, {passive:false});
-    });
-  }
-
-  function bindModalClose(){
-    document.querySelectorAll('.modal-backdrop, .modal-close a').forEach(function(a){
-      if(a.dataset.closeBound === '1') return;
-      a.dataset.closeBound = '1';
-      function close(e){
-        e.preventDefault();
-        closeModal();
-      }
-      a.addEventListener('click', close, true);
-      a.addEventListener('touchend', close, {passive:false});
-    });
-  }
-
-  function initBrochure(){
+  window.addEventListener('load', function(){
     bindShortcuts();
-    bindBioButtons();
-    bindModalClose();
     setupVideo();
-  }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', initBrochure, {once:true});
-  } else {
-    initBrochure();
-  }
+  });
   window.addEventListener('pageshow', function(){
-    initBrochure();
+    bindShortcuts();
+    setupVideo();
   });
 })();
 </script>
 <script>
-function closeModal(){
-  try{
-    if(window.history && window.history.pushState){
-      window.history.pushState('', document.title, window.location.pathname + window.location.search);
-      return;
-    }
-  }catch(e){}
-  window.location.hash = '';
-}
-</script>
-<script data-cfasync="false">
 (function(){
-  function forcePlay(){
-    var v = document.getElementById('respiroVideo');
-    if(!v) return;
-    // Some mobile webviews need explicit currentTime reset
-    try {
-      v.muted = true;
-      v.playsInline = true;
-      v.setAttribute('playsinline','');
-      v.setAttribute('muted','');
-      v.setAttribute('autoplay','');
-      v.preload = 'auto';
-    } catch(e){}
-    var tries = 0;
-    function attempt(){
-      tries++;
-      var p;
-      try { p = v.play(); } catch(e){ p = null; }
-      if(p && typeof p.then === 'function'){
-        p.catch(function(){
-          if(tries < 6) setTimeout(attempt, 400);
-        });
-      } else {
-        if(tries < 6) setTimeout(attempt, 400);
-      }
-    }
-    // kick after metadata/canplay too
-    v.addEventListener('loadedmetadata', attempt, {once:true});
-    v.addEventListener('canplay', attempt, {once:true});
-    attempt();
+  function goTo(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    catch(e){ el.scrollIntoView(true); }
   }
-  window.addEventListener('load', forcePlay, {once:true});
-  window.addEventListener('pageshow', function(e){ if(e.persisted) forcePlay(); });
-  document.addEventListener('visibilitychange', function(){ if(!document.hidden) forcePlay(); });
+  function bind(selector){
+    document.querySelectorAll(selector).forEach(function(a){
+      function go(e){
+        var href = (a.getAttribute('href')||'').trim();
+        if(href && href.charAt(0)==='#'){
+          e.preventDefault();
+          goTo(href.slice(1));
+        }
+      }
+      a.addEventListener('click', go, true);
+      a.addEventListener('touchend', go, {passive:false});
+    });
+  }
+  window.addEventListener('load', function(){
+    bind('a.footer-cta');
+    bind('a.hs-link');
+  });
+  window.addEventListener('pageshow', function(){
+    bind('a.footer-cta');
+    bind('a.hs-link');
+  });
 })();
 </script>
 </body>
