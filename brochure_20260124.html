@@ -365,5 +365,12 @@ window.addEventListener('pageshow', function(){
   });
 })();
 </script>
+  <script>
+function closeModal(){
+  if (location.hash) {
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+  }
+}
+</script>
 </body>
 </html>
