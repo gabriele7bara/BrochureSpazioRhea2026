@@ -38,7 +38,6 @@ html, body{width:100%;height:100%;margin:0;padding:0;overflow-x:hidden;}
 /* Ensure hotspots align with full-width scaling */
 .wrap{position:relative;}
 /* Video: prefer contain to avoid cropping, but eliminate side gutters by matching background */
-.respiro-video{background:transparent; object-fit:contain;}
 /* Some in-app browsers apply color adjustments; opt out where supported */
 :root{color-scheme:light;}
 /* Full-bleed look without white gutters */
@@ -127,25 +126,11 @@ html, body{
   pointer-events:none;
 }
 
-.video-matte{
-  display:none !important;
-}
-
-#respiroVideo,
-.respiro-video{
-  position:relative;
-  z-index:1 !important;
-  width:100% !important;
-  height:100% !important;
-  display:block !important;
-  object-fit:contain !important;
-  background:transparent !important;
-  pointer-events:none !important;
-}
   .respiro-svg{
   width:100%;
   height:100%;
   display:block;
+  pointer-events:none !important;
 }
 
 /* Stato iniziale */
@@ -230,25 +215,155 @@ html, body{
   <div id="p3" class="anchor" style="top:49.856456%"></div>
   <div id="p4" class="anchor" style="top:74.799452%"></div>
 <div class="hotspot1-anim">
-  <svg viewBox="0 0 500 500" class="respiro-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="respiro-svg"
+    viewBox="0 0 500 500"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Respiro Sacro"
+    role="img"
+  >
+    <defs>
+      <!-- Maschera: reveal radiale dal centro -->
+      <mask id="radialRevealMask">
+        <rect x="0" y="0" width="500" height="500" fill="black"/>
+        <circle id="revealCircle" cx="250" cy="210" r="8" fill="white">
+          <animate
+            attributeName="r"
+            from="8"
+            to="170"
+            dur="2.8s"
+            begin="0s"
+            fill="freeze"
+            calcMode="spline"
+            keySplines="0.22 0.61 0.36 1"
+          />
+        </circle>
+      </mask>
 
-    <g class="symbol">
-      <circle cx="250" cy="250" r="120" stroke="#C8A96A" stroke-width="2" fill="none"/>
-      <circle cx="250" cy="250" r="90" stroke="#C8A96A" stroke-width="1.5" fill="none"/>
-      <circle cx="250" cy="250" r="60" stroke="#C8A96A" stroke-width="1" fill="none"/>
+      <!-- Glow leggerissimo -->
+      <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="1.2" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- SIMBOLO -->
+    <g
+      class="symbol-wrap"
+      mask="url(#radialRevealMask)"
+      filter="url(#softGlow)"
+      transform-origin="250px 210px"
+    >
+      <g class="symbol-core">
+        <!-- cerchio esterno -->
+        <circle cx="250" cy="210" r="110"
+          fill="none"
+          stroke="#C7A56A"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          opacity="0.95"/>
+
+        <!-- cerchio medio -->
+        <circle cx="250" cy="210" r="82"
+          fill="none"
+          stroke="#C7A56A"
+          stroke-width="1.2"
+          stroke-linecap="round"
+          opacity="0.9"/>
+
+        <!-- cerchio interno -->
+        <circle cx="250" cy="210" r="54"
+          fill="none"
+          stroke="#C7A56A"
+          stroke-width="1"
+          stroke-linecap="round"
+          opacity="0.9"/>
+
+        <!-- petali / geometria -->
+        <g fill="none" stroke="#C7A56A" stroke-linecap="round" opacity="0.92">
+          <ellipse cx="250" cy="156" rx="22" ry="54" stroke-width="1.15"/>
+          <ellipse cx="250" cy="264" rx="22" ry="54" stroke-width="1.15"/>
+          <ellipse cx="196" cy="210" rx="54" ry="22" stroke-width="1.15"/>
+          <ellipse cx="304" cy="210" rx="54" ry="22" stroke-width="1.15"/>
+
+          <ellipse cx="212" cy="172" rx="20" ry="46" stroke-width="1"/>
+          <ellipse cx="288" cy="172" rx="20" ry="46" stroke-width="1"/>
+          <ellipse cx="212" cy="248" rx="20" ry="46" stroke-width="1"/>
+          <ellipse cx="288" cy="248" rx="20" ry="46" stroke-width="1"/>
+        </g>
+
+        <!-- rombo / asse interno -->
+        <path
+          d="M250 145 L285 210 L250 275 L215 210 Z"
+          fill="none"
+          stroke="#C7A56A"
+          stroke-width="1.15"
+          stroke-linejoin="round"
+          opacity="0.9"/>
+
+        <!-- piccolo nucleo centrale -->
+        <circle cx="250" cy="210" r="8"
+          fill="none"
+          stroke="#C7A56A"
+          stroke-width="1.2"
+          opacity="0.95"/>
+      </g>
+
+      <!-- respiro morbido -->
+      <animateTransform
+        attributeName="transform"
+        type="scale"
+        values="1;1.018;1"
+        keyTimes="0;0.68;1"
+        dur="3.8s"
+        begin="0s"
+        additive="sum"
+        fill="freeze"
+        calcMode="spline"
+        keySplines="0.25 0.1 0.25 1; 0.25 0.1 0.25 1"
+      />
     </g>
 
-    <text
-      x="250"
-      y="440"
-      text-anchor="middle"
-      font-size="18"
-      fill="#6F8FAF"
-      letter-spacing="2"
-    >
-      SPAZIO RHEA
-    </text>
+    <!-- TESTO -->
+    <g class="text-wrap" opacity="0">
+      <animate
+        attributeName="opacity"
+        from="0"
+        to="1"
+        dur="0.9s"
+        begin="2.8s"
+        fill="freeze"
+        calcMode="spline"
+        keySplines="0.22 0.61 0.36 1"
+      />
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 10"
+        to="0 0"
+        dur="0.9s"
+        begin="2.8s"
+        fill="freeze"
+        calcMode="spline"
+        keySplines="0.22 0.61 0.36 1"
+      />
 
+      <text
+        x="250"
+        y="440"
+        text-anchor="middle"
+        font-size="18"
+        letter-spacing="4"
+        fill="#6E87A4"
+        font-family="Georgia, 'Times New Roman', serif"
+      >
+        SPAZIO RHEA
+      </text>
+    </g>
   </svg>
 </div>
 
