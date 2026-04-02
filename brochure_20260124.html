@@ -224,21 +224,49 @@ html, body{
     .symbol-shell, .logo-shell, .logo-shell * {
       pointer-events: none;
     }
-    .symbol-shell {
-      transform-origin: 600px 100px;
-      animation: softBreath 2.8s cubic-bezier(.22,.61,.36,1) forwards;
-    }
+    .symbol-shell{
+  animation: respiroReveal 3.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  transform-origin:center;
+}
     .logo-shell {
       opacity: 0;
       animation: logoReveal .95s ease-out 2.55s forwards;
     }
-    @keyframes softBreath {
-      0% { opacity: 0; transform: scale(.94); }
-      18% { opacity: .7; transform: scale(.975); }
-      48% { opacity: 1; transform: scale(1.018); }
-      72% { opacity: 1; transform: scale(1.028); }
-      100% { opacity: 1; transform: scale(1); }
-    }
+   @keyframes respiroReveal{
+  0%{
+    opacity:0;
+    transform:scale(0.94);
+  }
+  18%{
+    opacity:0.12;
+  }
+  38%{
+    opacity:0.42;
+  }
+  62%{
+    opacity:0.82;
+    transform:scale(1.012);
+  }
+  82%{
+    opacity:1;
+    transform:scale(1.02);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+    @keyframes respiroPulse{
+  0%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.012);
+  }
+  100%{
+    transform:scale(1);
+  }
+}
     @keyframes logoReveal {
       0% { opacity: 0; transform: translate(0,12px); }
       100% { opacity: 1; transform: translate(0,0); }
