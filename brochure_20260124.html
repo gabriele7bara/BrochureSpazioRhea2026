@@ -147,7 +147,7 @@ html, body{
 
 /* Animazione simbolo (respiro) */
 .symbol{
-  animation: respiroSymbol 2.8s ease-out forwards;
+  animation: respiroPulse 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) 4.55s 1 forwards;
 }
 
 @keyframes respiroSymbol{
@@ -169,8 +169,7 @@ html, body{
 
 /* Animazione testo (dopo il picco) */
 .text{
-  animation: respiroText 1s ease-out forwards;
-  animation-delay: 2.6s;
+  animation: logoReveal 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) 4.15s forwards;
 }
 
 @keyframes respiroText{
@@ -261,23 +260,32 @@ html, body{
 
   <defs>
   <radialGradient id="revealGradient" cx="50%" cy="50%" r="50%">
-    <stop offset="0%" stop-color="white" stop-opacity="1"/>
-    <stop offset="55%" stop-color="white" stop-opacity="1"/>
-    <stop offset="78%" stop-color="white" stop-opacity="0.35"/>
-    <stop offset="100%" stop-color="black" stop-opacity="0"/>
-  </radialGradient>
+  <stop offset="0%" stop-color="white" stop-opacity="1"/>
+  <stop offset="42%" stop-color="white" stop-opacity="1"/>
+  <stop offset="68%" stop-color="white" stop-opacity="0.72"/>
+  <stop offset="84%" stop-color="white" stop-opacity="0.22"/>
+  <stop offset="100%" stop-color="black" stop-opacity="0"/>
+</radialGradient>
 
   <mask id="radialRevealMask" maskUnits="userSpaceOnUse">
     <circle id="revealMaskCircle" cx="625" cy="270" r="0" fill="url(#revealGradient)">
-      <animate
-        attributeName="r"
-        begin="0s"
-        dur="4.0s"
-        values="0;36;88;150;230;320;430;560"
-        keyTimes="0;0.08;0.18;0.32;0.50;0.70;0.88;1"
-        calcMode="spline"
-        keySplines=".28 0 .18 1; .28 0 .18 1; .28 0 .18 1; .28 0 .18 1; .28 0 .18 1; .28 0 .18 1; .28 0 .18 1"
-        fill="freeze" />
+     <animate
+  attributeName="r"
+  begin="0s"
+  dur="4.6s"
+  values="0;20;52;110;210;360;580;860;1100"
+  keyTimes="0;0.06;0.14;0.28;0.46;0.66;0.82;0.93;1"
+  calcMode="spline"
+  keySplines="
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1;
+    .25 0 .18 1"
+  fill="freeze" />
     </circle>
   </mask>
 </defs>
