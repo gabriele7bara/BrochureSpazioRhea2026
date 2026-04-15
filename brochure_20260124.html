@@ -265,7 +265,7 @@ html, body{
           width="340%" height="340%"
           filterUnits="objectBoundingBox"
           color-interpolation-filters="sRGB">
-    <feGaussianBlur stdDeviation="22" />
+    <feGaussianBlur stdDeviation="32" />
   </filter>
 
   <mask id="radialRevealMask"
@@ -279,19 +279,15 @@ html, body{
           cx="625" cy="270" r="0"
           fill="white"
           filter="url(#revealEdgeBlur)">
-    <animate
+   <animate
   attributeName="r"
   begin="0s"
   dur="4.0s"
-  values="0;120;260;470;760;1120"
-  keyTimes="0;0.18;0.36;0.58;0.80;1"
+  from="0"
+  to="1120"
   calcMode="spline"
-  keySplines="
-    0.30 0.00 0.22 1;
-    0.30 0.00 0.22 1;
-    0.28 0.00 0.22 1;
-    0.26 0.00 0.22 1;
-    0.24 0.00 0.22 1"
+  keyTimes="0;1"
+  keySplines="0.42 0.00 0.20 1"
   fill="freeze" />
   </circle>
 
@@ -302,15 +298,11 @@ html, body{
   attributeName="r"
   begin="0s"
   dur="4.0s"
-  values="0;100;220;400;670;980"
-  keyTimes="0;0.18;0.36;0.58;0.80;1"
+  from="0"
+  to="980"
   calcMode="spline"
-  keySplines="
-    0.30 0.00 0.22 1;
-    0.30 0.00 0.22 1;
-    0.28 0.00 0.22 1;
-    0.26 0.00 0.22 1;
-    0.24 0.00 0.22 1"
+  keyTimes="0;1"
+  keySplines="0.42 0.00 0.20 1"
   fill="freeze" />
   </circle>
 </mask>
