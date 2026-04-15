@@ -269,41 +269,41 @@ html, body{
   </filter>
 
   <mask id="radialRevealMask"
-        x="-900" y="-900"
-        width="3000" height="2600"
-        maskUnits="userSpaceOnUse"
-        maskContentUnits="userSpaceOnUse">
-    <rect x="-900" y="-900" width="3000" height="2600" fill="black"/>
+      x="-900" y="-900"
+      width="3000" height="2600"
+      maskUnits="userSpaceOnUse"
+      maskContentUnits="userSpaceOnUse">
+  <rect x="-900" y="-900" width="3000" height="2600" fill="black"/>
 
-    <circle id="revealMaskSoft"
-        cx="625" cy="270" r="0"
-        fill="white"
-        filter="url(#revealEdgeBlur)">
-  <animate
-  attributeName="r"
-  begin="0s"
-  dur="4.0s"
-  from="0"
-  to="1120"
-  calcMode="spline"
-  keyTimes="0;1"
-  keySplines="0.30 0.00 0.22 1"
-  fill="freeze" />
-<circle id="revealMaskCore"
-        cx="625" cy="270" r="0"
-        fill="white">
-  <animate
-  attributeName="r"
-  begin="0s"
-  dur="4.0s"
-  from="0"
-  to="980"
-  calcMode="spline"
-  keyTimes="0;1"
-  keySplines="0.30 0.00 0.22 1"
-  fill="freeze" />
-</circle>
-  </mask>
+  <circle id="revealMaskSoft"
+          cx="625" cy="270" r="0"
+          fill="white"
+          filter="url(#revealEdgeBlur)">
+    <animate
+      attributeName="r"
+      begin="0s"
+      dur="4.0s"
+      values="0;700;1120"
+      keyTimes="0;0.78;1"
+      calcMode="spline"
+      keySplines="0.32 0.00 0.18 1; 0.24 0.00 0.22 1"
+      fill="freeze" />
+  </circle>
+
+  <circle id="revealMaskCore"
+          cx="625" cy="270" r="0"
+          fill="white">
+    <animate
+      attributeName="r"
+      begin="0s"
+      dur="4.0s"
+      values="0;610;980"
+      keyTimes="0;0.78;1"
+      calcMode="spline"
+      keySplines="0.32 0.00 0.18 1; 0.24 0.00 0.22 1"
+      fill="freeze" />
+  </circle>
+</mask>
 </defs>
 
   <g class="symbol-shell" mask="url(#radialRevealMask)">
