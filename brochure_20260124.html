@@ -167,7 +167,7 @@ html, body{
   <title id="title">Respiro Sacro — Spazio Rhea</title>
   <desc id="desc">Animazione morbida del marchio e del logo Spazio Rhea con reveal radiale e apparizione del testo.</desc>
 
- <style>
+<style>
   .symbol-shell,
   .symbol-shell *,
   .logo-shell,
@@ -186,15 +186,21 @@ html, body{
     overflow:visible;
   }
 
-  svg{
-    color-interpolation:sRGB;
-    color-rendering:optimizeQuality;
-    shape-rendering:geometricPrecision;
-    text-rendering:geometricPrecision;
+  .logo-shell{
+    opacity:0;
+    visibility:visible;
+    animation:logoReveal 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) 2.35s forwards;
   }
 
-  .logo-shell{
-    visibility:hidden;
+  @keyframes logoReveal{
+    0%{
+      opacity:0;
+      transform:translateY(10px);
+    }
+    100%{
+      opacity:1;
+      transform:translateY(0);
+    }
   }
 </style>
   <defs>
